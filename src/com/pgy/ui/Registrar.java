@@ -1,8 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package com.pgy.ui;
+
+import com.pgy.dataaccess.Conexion;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -34,9 +38,7 @@ public class Registrar extends javax.swing.JFrame {
         jTextFieldRut = new javax.swing.JTextField();
         jTextFieldApMa = new javax.swing.JTextField();
         jTextField3Tel = new javax.swing.JTextField();
-        jTextFieldDv = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -96,8 +98,6 @@ public class Registrar extends javax.swing.JFrame {
 
         jLabel2.setText("Rut");
 
-        jLabel3.setText("Dv");
-
         jLabel4.setText("Apellido Materno");
 
         jLabel5.setText("Teléfono");
@@ -108,7 +108,7 @@ public class Registrar extends javax.swing.JFrame {
 
         jLabel8.setText("Cuenta");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cuenta de ahorro", "Cuenta corriente" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cuenta de Ahorro", "Cuenta Corriente" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -151,19 +151,14 @@ public class Registrar extends javax.swing.JFrame {
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldRut, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2))
-                                .addGap(28, 28, 28)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jTextFieldDv, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
                             .addComponent(jLabel6)
                             .addComponent(jLabel9)
-                            .addComponent(jTextField1)
-                            .addComponent(jTextField3))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                                .addComponent(jTextField3))
+                            .addComponent(jTextFieldRut, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(51, 51, 51)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel4)
@@ -190,16 +185,17 @@ public class Registrar extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5))
                 .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldRut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldApMa, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldDv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3Tel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextFieldApMa, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField3Tel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(jTextFieldRut, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jLabel7)
@@ -249,6 +245,46 @@ public class Registrar extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        String rut = jTextFieldRut.getText();
+        String nombre = jTextField1.getText();
+        String apellidoPaterno = jTextField3.getText();
+        String apellidoMaterno = jTextFieldApMa.getText();
+        String domicilio = jTextField2.getText();
+        String comuna = jTextField4.getText();
+        String telefono = jTextField3Tel.getText();
+        String descripcion = jComboBox1.getSelectedItem().toString();
+        int numeroCuenta = Integer.parseInt(jTextField5.getText());
+      
+        try {
+            Connection con = Conexion.getConexion();
+
+            // Para realizar la inserción de datos
+            PreparedStatement ps = con.prepareStatement("INSERT INTO clientes (rut, nombre, apellidoPaterno, apellidoMaterno, domicilio, comuna, telefono) VALUES (?,?,?,?,?,?,?)");
+
+            ps.setString(1, rut);
+            ps.setString(2, nombre);
+            ps.setString(3, apellidoPaterno);
+            ps.setString(4, apellidoMaterno);
+            ps.setString(5, domicilio);
+            ps.setString(6, comuna);
+            ps.setString(7, telefono);
+            ps.executeUpdate();
+            
+            
+            // Insertar datos en la tabla "cuentas"
+            PreparedStatement psCuentas = con.prepareStatement("INSERT INTO cuentas (numero, saldo, descripcion, cliente_rut) VALUES (?,?,?,?)");
+            psCuentas.setInt(1, numeroCuenta);
+            psCuentas.setInt(2, 0); // Saldo inicial en 0, actualízalo si es necesario
+            psCuentas.setString(3, descripcion);
+            psCuentas.setString(4, rut);
+            psCuentas.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Registro Guardado");
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
@@ -299,7 +335,6 @@ public class Registrar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -313,7 +348,6 @@ public class Registrar extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextFieldApMa;
-    private javax.swing.JTextField jTextFieldDv;
     private javax.swing.JTextField jTextFieldRut;
     private java.awt.PopupMenu popupMenu1;
     // End of variables declaration//GEN-END:variables
